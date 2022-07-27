@@ -1,5 +1,6 @@
 package StepDefenitions;
 
+import io.cucumber.java.After;
 import io.cucumber.java.en.*;
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.*;
@@ -7,7 +8,6 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.Select;
 import java.time.Duration;
-
 
 
 public class Steps {
@@ -66,21 +66,20 @@ public class Steps {
         System.out.println("User click Go button");
         driver.findElement(findButton).click();
 
-
     }
 
     @Then("The User should see of distance")
     public void the_user_should_be_see_of_calculated_distance() {
         System.out.println("User see result of distance calculation");
+        String expectedDistance = "2425";
 
         WebElement actualDistanceElement = driver.findElement((By.xpath("//p[contains(text(),'Расстояние: ')]")));
-        Assertions.assertTrue(actualDistanceElement.getText().contains("2423km"));
+        Assertions.assertTrue(actualDistanceElement.getText().contains(expectedDistance));
 
-        //variant with Distace 2425 will fail because actual distace is 2423(below)
-        //Assertions.assertTrue(actualDistanceElement.getText().contains("2425km"));
-
+    }
+    @After()
+    public void closeBrowser() {
         driver.close();
         driver.quit();
-
     }
 }
